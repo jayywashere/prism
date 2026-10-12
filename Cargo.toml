@@ -1,0 +1,11 @@
+[package]
+name = "prism"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "prism"
+path = "src/main.rs"
+
+[dependencies]
+inkwell = { version = "0.10", features = ["llvm22-1", "llvm22-1-prefer-dynamic"] }
