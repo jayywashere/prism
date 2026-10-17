@@ -81,7 +81,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "prism"
+name = "prism-llvm"
 version = "0.1.0"
 dependencies = [
  "inkwell",

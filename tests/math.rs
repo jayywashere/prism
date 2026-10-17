@@ -1,6 +1,5 @@
 use inkwell::values::BasicMetadataValueEnum;
-use prism::{
-    compiler::Toolchain,
+use prism_llvm::{
     core::Context,
     types::{IntegerSign, Type},
 };
@@ -10,12 +9,6 @@ fn math() {
     let context = Context::new();
     let module = context.create_module("test");
     let builder = context.create_builder();
-
-    let toolchain = Toolchain::discover();
-    assert!(
-        toolchain.is_ok(),
-        "Failed to locate local compiler binaries. Are they added to PATH?"
-    );
 
     // INTEGER
 

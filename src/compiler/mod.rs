@@ -15,6 +15,3 @@ pub use pipeline::compile;
 
 pub mod target;
 pub use target::CodeGenerator;
-
-pub mod tools;
-pub use tools::Toolchain;

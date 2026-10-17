@@ -1,6 +1,6 @@
 use std::{env, path::PathBuf, process, str::FromStr};
 
-use prism::compiler::{self, Linker, OptimizationLevel};
+use prism_llvm::compiler::{self, Linker, OptimizationLevel};
 
 fn main() {
     let mut args = env::args().skip(1);

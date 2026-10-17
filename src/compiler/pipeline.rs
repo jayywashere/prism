@@ -29,6 +29,9 @@ pub fn compile(
     }
 
     let object_path = output_path.with_extension("o");
+    let bitcode_path = output_path.with_extension("bc");
+
+    module.write_bitcode_to_path(&bitcode_path);
 
     codegen.emit_object(&module, &object_path)?;
     linker.link(&object_path, output_path)?;

@@ -170,13 +170,38 @@ impl<'ctx> Builder<'ctx> {
         value_type: &Type,
         name: &str,
     ) -> Result<PointerValue<'_>, PrismError> {
-        let llvm_type = value_type
-            .to_basic_type(self.context)
-            .expect("Cannot allocate stack memory for Type::Void.");
+        let llvm_type = value_type.to_basic_type(self.context).ok_or_else(|| {
+            PrismError::Compilation("Cannot allocate stack memory for Type::Void.".to_owned())
+        })?;
 
         self.builder
             .build_alloca(llvm_type, name)
-            .map_err(|err| PrismError::Builder(err))
+            .map_err(PrismError::Builder)
+    }
+
+    pub fn build_store<V: BasicValue<'ctx>>(
+        &self,
+        pointer: PointerValue<'ctx>,
+        value: V,
+    ) -> Result<InstructionValue<'_>, PrismError> {
+        self.builder
+            .build_store(pointer, value)
+            .map_err(PrismError::Builder)
+    }
+
+    pub fn build_load(
+        &self,
+        value_type: &Type,
+        pointer: PointerValue<'ctx>,
+        name: &str,
+    ) -> Result<BasicValueEnum<'_>, PrismError> {
+        let llvm_type = value_type.to_basic_type(self.context).ok_or_else(|| {
+            PrismError::Compilation("Cannot load a value of Type::Void.".to_owned())
+        })?;
+
+        self.builder
+            .build_load(llvm_type, pointer, name)
+            .map_err(PrismError::Builder)
     }
 
     pub fn build_return(
