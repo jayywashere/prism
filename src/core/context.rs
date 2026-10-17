@@ -81,6 +81,8 @@ impl Context {
         Module::new(&self.context, module)
     }
 
+    pub fn create_module_from_ir() {}
+
     pub fn create_builder(&self) -> Builder<'_> {
         Builder::new(&self.context)
     }
